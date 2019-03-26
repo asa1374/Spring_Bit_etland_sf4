@@ -1,27 +1,20 @@
 var compo = compo || {};
 compo = {
-		common_nav : ()=>{ 
-			$('#nav').children().eq(0).html('<a href="#"> 로그인 </a>');
-			$('#nav').children().eq(1).html('<a id="sign" href="#"> 회원가입 </a>');
-			$('#nav').children().eq(2).html('<a href="#"> 사원등록 </a>');
-			$('#nav').children().eq(3).html('<a href="#"> 사원로그인 </a>');
-		},
 		cust_login_form : ()=>{
-			return '<h2>Login Form</h2>'
-			+'<form action="/action_page.php">'
+			return '<h2>로그인 화면</h2>'
+			+'<form>'
 			+'  <div class="imgcontainer">'
 			+'    <img src="'+$.img()+'/img_avatar2.png"  alt="Avatar" class="avatar">'
 			+'  </div>'
 			+'  <div class="container">'
 			+'    <label for="uname"><b>Username</b></label>'
-			+'    <input type="text" placeholder="Enter Username" name="uname" required>'
-			+''
+			+'    <input type="text" placeholder="Enter Username" name="uname" required></br>'
 			+'    <label for="psw"><b>Password</b></label>'
-			+'    <input type="password" placeholder="Enter Password" name="psw" required>'
-			+'    <button type="submit">Login</button>'
+			+'    <input type="password" placeholder="Enter Password" name="psw" required></br>'
 			+'    <label>'
 			+'      <input type="checkbox" checked="checked" name="remember"> Remember me'
 			+'    </label>'
+			+'    <button type="submit">Login</button>'
 			+'  </div>'
 			+'  <div class="container" style="background-color:#f1f1f1">'
 			+'    <button type="button" class="cancelbtn">Cancel</button>'
@@ -36,12 +29,11 @@ compo = {
 			+'    <p>Please fill in this form to create an account.</p>'
 			+'    <hr>'
 			+'    <label for="email"><b>Email</b></label>'
-			+'    <input type="text" placeholder="Enter Email" name="email" required>'
-			+''
+			+'    <input type="text" placeholder="Enter Email" name="email" required></br>'
 			+'    <label for="psw"><b>Password</b></label>'
-			+'    <input type="password" placeholder="Enter Password" name="psw" required>'
+			+'    <input type="password" placeholder="Enter Password" name="psw" required></br>'
 			+'    <label for="psw-repeat"><b>Repeat Password</b></label>'
-			+'    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>'
+			+'    <input type="password" placeholder="Repeat Password" name="psw-repeat" required></br>'
 			+'    <label>'
 			+'      <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me'
 			+'    </label>'

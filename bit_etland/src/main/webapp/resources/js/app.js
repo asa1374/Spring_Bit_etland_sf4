@@ -10,13 +10,10 @@ app = (()=>{
 		$.when(
 				$.getScript($.js()+'/component/compo.js'),
 				$.getScript($.js()+'/customer/cust.js'),
+				$.getScript($.js()+'/common/auth.js'),
 				$.getScript($.js()+'/employee/emp.js')
 		).done(()=>{
-			compo.common_nav();
-			cust.permission.login();
-			$('#sign').click(()=>{
-				cust.permission.join();
-			});
+			auth.permission.login();
 		});
 	};
 	return {init:init,
