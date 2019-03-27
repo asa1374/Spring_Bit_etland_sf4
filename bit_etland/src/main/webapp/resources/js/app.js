@@ -19,7 +19,6 @@ app = (()=>{
 	return {init:init,
 		onCreate:onCreate};
 })();
-
 app.$ = {
 		init : (x)=>{
 			$.getScript(x+'/resources/js/router.js',()=>{

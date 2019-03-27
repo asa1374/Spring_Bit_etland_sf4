@@ -4,8 +4,14 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit_etland.web.cust.CustomerMapper">
 	<select id="selectCustomer" resultType="com.bit_etland.web.cust.Customer">
-	  SELECT CUSTOMER_ID customerID,CUSTOMER_NAME customerName,PASSWORD,CITY,ADDRESS,POSTAL_CODE postalCode,SSN,PHONE,PHOTO
-	  FROM CUSTOMERS WHERE CUSTOMER_ID LIKE #{customerID} AND PASSWORD LIKE #{password}
+	  SELECT CUSTOMER_ID customerID,
+	  	CUSTOMER_NAME customerName,
+	  	PASSWORD,CITY,ADDRESS,POSTAL_CODE postalCode,SSN,PHONE,PHOTO
+	  FROM CUSTOMERS
+	  WHERE CUSTOMER_ID LIKE #{customerID}
+	  	<if test="password != null">
+	  		AND PASSWORD LIKE #{password}
+	  	</if>
 	</select>
 	<insert id="resistCustomer" parameterType="com.bit_etland.web.cust.Customer"
 		  flushCache="true" statementType="PREPARED" timeout="20">
