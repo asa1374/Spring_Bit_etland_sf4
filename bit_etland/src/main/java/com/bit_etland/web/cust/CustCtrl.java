@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bit_etland.web.cmm.PrintService;
 
-/**
- * Handles requests for the application home page.
- */
 @RestController
 @RequestMapping("/cust")
 public class CustCtrl {
