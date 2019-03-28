@@ -28,7 +28,7 @@ private static final Logger logger = LoggerFactory.getLogger(EmployeeCtrl.class)
 	@Autowired Map<String, Object> map;
 	@Autowired Users<?> users;
 	
-	@PostMapping("/cust/{userid}")
+	@PostMapping("/emp/{userid}")
 	public Employee login(
 			@PathVariable String user,
 			@PathVariable String userid,
@@ -39,7 +39,7 @@ private static final Logger logger = LoggerFactory.getLogger(EmployeeCtrl.class)
 	}
 	
 	@SuppressWarnings("unchecked")
-	@PostMapping("/{user}/list")
+	@PostMapping("/emp/list")
 	public List<Users<?>> list(
 			@PathVariable String user,
 			@RequestBody Employee param) {
@@ -48,7 +48,7 @@ private static final Logger logger = LoggerFactory.getLogger(EmployeeCtrl.class)
 		return (List<Users<?>>)i.apply(param);
 	}
 	
-	@PostMapping("/cust")
+	@PostMapping("/emp")
 	public Map<?,?> join(
 			@PathVariable String user,
 			@RequestBody Employee param) {
@@ -60,7 +60,7 @@ private static final Logger logger = LoggerFactory.getLogger(EmployeeCtrl.class)
 		return map;
 	}
 
-	@PutMapping("/{user}/{userid}")
+	@PutMapping("/emp/{userid}")
 	public Map<?,?> update(
 			@PathVariable String user,
 			@PathVariable String userid,
@@ -74,7 +74,7 @@ private static final Logger logger = LoggerFactory.getLogger(EmployeeCtrl.class)
 		return map;
 	}
 	
-	@DeleteMapping("/{user}/{userid}")
+	@DeleteMapping("/emp/{userid}")
 	public Map<?,?> delete(
 			@PathVariable String user,
 			@PathVariable String userid,

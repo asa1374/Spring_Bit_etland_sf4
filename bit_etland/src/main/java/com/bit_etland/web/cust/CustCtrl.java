@@ -36,14 +36,12 @@ public class CustCtrl {
 	@Autowired Map<String, Object> map;
 	@Autowired Users<?> users;
 	
-	@PostMapping("/cust/{userid}")
+	@PostMapping("/cust/login")
 	public Customer login(
-			@PathVariable String user,
-			@PathVariable String userid,
 			@RequestBody Customer param) {
-		logger.info("login 진입");
+		System.out.println("로그인 진입");
 		IFunction i = (Object o) -> custMap.selectCustomer(param);
-		return (Customer) i.apply(param);
+		return (Customer)i.apply(param);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -58,7 +56,6 @@ public class CustCtrl {
 	
 	@PostMapping("/cust")
 	public Map<?,?> join(
-			@PathVariable String user,
 			@RequestBody Customer param) {
 		logger.info("등록 진입");
 		IConsumer i = (Object o) -> custMap.registCustomer(param);
@@ -68,10 +65,8 @@ public class CustCtrl {
 		return map;
 	}
 
-	@PutMapping("/{user}/{userid}")
+	@PutMapping("/cust/u")
 	public Map<?,?> update(
-			@PathVariable String user,
-			@PathVariable String userid,
 			@RequestBody Customer param) {
 		System.out.println("update 진입");
 		IConsumer i = (Object o) -> custMap.modifyCustomer(param);
@@ -82,7 +77,7 @@ public class CustCtrl {
 		return map;
 	}
 	
-	@DeleteMapping("/{user}/{userid}")
+	@DeleteMapping("/cust/d")
 	public Map<?,?> delete(
 			@PathVariable String user,
 			@PathVariable String userid,

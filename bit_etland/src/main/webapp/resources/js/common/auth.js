@@ -22,7 +22,6 @@ auth = (()=>{
 				e.preventDefault();
 				login();
 			});
-			login();
 			let arr = [
 				{name :"login",text :"로그인"},
 				{name :"join",text :"회원가입"},
@@ -72,7 +71,7 @@ auth = (()=>{
                     customerID:$('form  input[name=uname]').val(),
                     password:$('form  input[name=psw]').val()};
            $.ajax({
-                url : _+'/users/cust/'+data.customerID,
+                url : _+'/users/cust/login',
                 type : 'POST',
                 data : JSON.stringify(data),
                 dataType : 'json',
@@ -80,23 +79,14 @@ auth = (()=>{
                 success : d=>{
                 	if(d.customerID!==''){
                 		alert('success');
-                		$.getScript($.js+"/customer/cust.js")
+                		
+                		$.getScript($.js()+"/customer/cust.js")
                 		.done(()=>{
                 			cust.mypage(d);
                 		})
                 		.fail(()=>{
                 			alert('customer/cust.js 를 찾지 못했다.');
                 		});
-                		$(r_cnt).html(compo.cust_mypage(d));
-                		$('#update').click(e=>{
-							e.preventDefault();
-							$(r_cnt).html(compo.cust_update_form(d));
-							$('#my_update').click(e=>{
-								e.preventDefault();
-								update();
-							});
-						});
-                		//$(compo.cust_mypage()).appendTo(r_cnt);
                 	}else{
                 		alert('error');
                 	}
@@ -184,7 +174,7 @@ auth = (()=>{
 			}
 		});
 	};
-	let update = ()=>{
+	/*let update = ()=>{
 		let data = {
 				customerID:$('form input[name=customerID]').val(),
 				password:$('form input[name=password]').val(),
@@ -214,7 +204,7 @@ auth = (()=>{
 				alert('실패하였습니다.');
 			}
 		});
-	};
+	};*/
 	let access = ()=>{
 		let data = {
 				employeeID:$('form  input[name=uname]').val(),
