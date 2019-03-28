@@ -48,5 +48,5 @@
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg ref ="sqlSessionFactoryBean"/>
     </bean>
-    <mybatis-spring:scan base-package="com.bit_etland.web"/> 
+    <mybatis-spring:scan base-package="com.bit_etland.web"/>
 </beans>

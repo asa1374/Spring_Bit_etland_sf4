@@ -13,7 +13,7 @@
 	  		AND PASSWORD LIKE #{password}
 	  	</if>
 	</select>
-	<insert id="resistCustomer" parameterType="com.bit_etland.web.cust.Customer"
+	<insert id="registCustomer" parameterType="com.bit_etland.web.cust.Customer"
 		  flushCache="true" statementType="PREPARED" timeout="20">
 	    INSERT INTO CUSTOMERS (CUSTOMER_ID,CUSTOMER_NAME,PASSWORD,CITY,ADDRESS,POSTAL_CODE,SSN,PHONE) 
 	    VALUES (#{customerID},#{customerName},#{password},#{city},#{address},#{postalCode},#{ssn},#{phone})

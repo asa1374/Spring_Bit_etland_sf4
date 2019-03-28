@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeeMapper {
-	public void insertEmployee(Employee emp);
+	public void registEmployee(Employee emp);
 	public List<Employee> bringEmployeeList(Map<?,?> m);
 	public List<Employee> selectCategoris(Map<?,?> m);
 	public Employee selectEmployee(Employee emp);

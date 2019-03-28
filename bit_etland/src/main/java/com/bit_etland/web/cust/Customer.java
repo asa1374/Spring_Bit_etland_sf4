@@ -7,5 +7,7 @@ import lombok.Data;
 
 @Data @Component @Lazy
 public class Customer {
-	private String customerID,customerName,password,ssn,photo,phone,city,address,postalCode,count;
+	private String customerID,
+	customerName,password,ssn,photo,
+	phone,city,address,postalCode,count;
 }

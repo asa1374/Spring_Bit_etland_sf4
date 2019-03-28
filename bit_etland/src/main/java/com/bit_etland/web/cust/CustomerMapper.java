@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerMapper {
-	public void insertCustomer(Customer cus);
+	public void registCustomer(Customer cus);
 	public List<Customer> bringCustomerList(Map<?,?> m);
 	public List<Customer> selectCategoris(Map<?,?> m);
 	public Customer selectCustomer(Customer cus);
