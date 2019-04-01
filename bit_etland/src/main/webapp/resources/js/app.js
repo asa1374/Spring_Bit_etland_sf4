@@ -9,9 +9,9 @@ app = (()=>{
 	let setContentView = ()=>{
 		$.when(
 				$.getScript($.js()+'/component/compo.js'),
-				$.getScript($.js()+'/customer/cust.js'),
+				$.getScript($.js()+'/cust/cust.js'),
 				$.getScript($.js()+'/common/auth.js'),
-				$.getScript($.js()+'/employee/emp.js')
+				$.getScript($.js()+'/emp/emp.js')
 		).done(()=>{
 			auth.init();
 		});

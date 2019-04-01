@@ -50,7 +50,7 @@ private static final Logger logger = LoggerFactory.getLogger(EmployeeCtrl.class)
 	
 	@PostMapping("/emp")
 	public Map<?,?> join(
-			@PathVariable String user,
+			@PathVariable String userid,
 			@RequestBody Employee param) {
 		logger.info("등록 진입");
 		IConsumer i = (Object o) -> empMap.registEmployee(param);
@@ -62,7 +62,6 @@ private static final Logger logger = LoggerFactory.getLogger(EmployeeCtrl.class)
 
 	@PutMapping("/emp/{userid}")
 	public Map<?,?> update(
-			@PathVariable String user,
 			@PathVariable String userid,
 			@RequestBody Employee param) {
 		System.out.println("update 진입");
@@ -76,7 +75,6 @@ private static final Logger logger = LoggerFactory.getLogger(EmployeeCtrl.class)
 	
 	@DeleteMapping("/emp/{userid}")
 	public Map<?,?> delete(
-			@PathVariable String user,
 			@PathVariable String userid,
 			@RequestBody Employee param) {
 		System.out.println("delete 진입");

@@ -33,6 +33,8 @@ auth = (()=>{
 				.attr('name',j.name)
 				.click(function(){
 					let that = $(this).attr('name');
+					$(this).addClass('active');
+					$(this).siblings().removeClass('active');
 					switch(that){
 					case 'login':
 						$(r_cnt).empty();
@@ -61,6 +63,7 @@ auth = (()=>{
 					}
 				});
 			})
+			$('.nav li[name=login]').addClass('active');
 		})
 		.fail(()=>{
 			alert('component/compo.js 를 찾지 못했다.');
@@ -71,21 +74,20 @@ auth = (()=>{
                     customerID:$('form  input[name=uname]').val(),
                     password:$('form  input[name=psw]').val()};
            $.ajax({
-                url : _+'/users/cust/login',
+                url : _+'/customers/'+data.customerID,
                 type : 'POST',
                 data : JSON.stringify(data),
                 dataType : 'json',
                 contentType : 'application/json',
                 success : d=>{
                 	if(d.customerID!==''){
-                		alert('success');
-                		
-                		$.getScript($.js()+"/customer/cust.js")
+                		$.getScript($.js()+"/cust/cust.js")
                 		.done(()=>{
+                			cust.init(d);
                 			cust.mypage(d);
                 		})
                 		.fail(()=>{
-                			alert('customer/cust.js 를 찾지 못했다.');
+                			alert('cust/cust.js 를 찾지 못했다.');
                 		});
                 	}else{
                 		alert('error');
@@ -107,7 +109,7 @@ auth = (()=>{
 			};
 			alert(data.customerID);
 			$.ajax({
-				url:_+'/users/cust/',
+				url:_+'/customers/'+data.customerID,
 				type:'POST',
 				data:JSON.stringify(data),
 				dataType:'json',
@@ -150,7 +152,7 @@ auth = (()=>{
 		};
 		alert(data.customerID);
 		$.ajax({
-			url:_+'/users/emp/',
+			url:_+'/emp/',
 			type:'POST',
 			data:JSON.stringify(data),
 			dataType:'json',

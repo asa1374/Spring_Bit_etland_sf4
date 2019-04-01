@@ -23,7 +23,6 @@ import com.bit_etland.web.emp.Employee;
 import com.bit_etland.web.emp.EmployeeMapper;
 
 @RestController
-@RequestMapping("/users")
 public class CustCtrl {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CustCtrl.class);
@@ -36,8 +35,9 @@ public class CustCtrl {
 	@Autowired Map<String, Object> map;
 	@Autowired Users<?> users;
 	
-	@PostMapping("/cust/login")
+	@PostMapping("/customers/{userid}")
 	public Customer login(
+			@PathVariable String userid,
 			@RequestBody Customer param) {
 		System.out.println("로그인 진입");
 		IFunction i = (Object o) -> custMap.selectCustomer(param);
@@ -54,7 +54,7 @@ public class CustCtrl {
 		return (List<Users<?>>)i.apply(param);
 	}
 	
-	@PostMapping("/cust")
+	@PostMapping("/customers/page/{page}")
 	public Map<?,?> join(
 			@RequestBody Customer param) {
 		logger.info("등록 진입");
@@ -65,8 +65,9 @@ public class CustCtrl {
 		return map;
 	}
 
-	@PutMapping("/cust/u")
+	@PutMapping("/customers/{userid}")
 	public Map<?,?> update(
+			@PathVariable String userid,
 			@RequestBody Customer param) {
 		System.out.println("update 진입");
 		IConsumer i = (Object o) -> custMap.modifyCustomer(param);
@@ -77,9 +78,8 @@ public class CustCtrl {
 		return map;
 	}
 	
-	@DeleteMapping("/cust/d")
+	@DeleteMapping("/customers/{userid}")
 	public Map<?,?> delete(
-			@PathVariable String user,
 			@PathVariable String userid,
 			@RequestBody Customer param) {
 		System.out.println("delete 진입");
