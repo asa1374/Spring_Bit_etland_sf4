@@ -10,7 +10,7 @@ public interface EmployeeMapper {
 	public void registEmployee(Employee emp);
 	public List<Employee> bringEmployeeList(Map<?,?> m);
 	public List<Employee> selectCategoris(Map<?,?> m);
-	public Employee selectEmployee(Employee emp);
+	public Employee selectEmployee();
 	public int countEmployee(Map<?,?> m);
 	public void modifyEmployee(Employee emp);
 	public Map<String, Object> selectProfile(Map<?,?> m);

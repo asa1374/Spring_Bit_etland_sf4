@@ -10,7 +10,7 @@ app = (()=>{
 		$.when(
 				$.getScript($.js()+'/component/compo.js'),
 				$.getScript($.js()+'/cust/cust.js'),
-				$.getScript($.js()+'/common/auth.js'),
+				$.getScript($.js()+'/comm/auth.js'),
 				$.getScript($.js()+'/emp/emp.js')
 		).done(()=>{
 			auth.init();

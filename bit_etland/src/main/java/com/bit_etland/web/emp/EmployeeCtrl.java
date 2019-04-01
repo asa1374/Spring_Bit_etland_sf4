@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bit_etland.web.cmm.IConsumer;
 import com.bit_etland.web.cmm.IFunction;
+import com.bit_etland.web.cmm.ISupplier;
 import com.bit_etland.web.cmm.PrintService;
 import com.bit_etland.web.cmm.Users;
 
@@ -28,27 +30,13 @@ private static final Logger logger = LoggerFactory.getLogger(EmployeeCtrl.class)
 	@Autowired Map<String, Object> map;
 	@Autowired Users<?> users;
 	
-	@PostMapping("/emp/{userid}")
-	public Employee login(
-			@PathVariable String user,
-			@PathVariable String userid,
-			@RequestBody Employee param) {
-		logger.info("login 진입");
-		IFunction i = (Object o) -> empMap.selectEmployee(param);
-		return (Employee) i.apply(param);
+	@GetMapping("/employees")
+	public Employee access() {
+		ISupplier i = ()-> 	empMap.selectEmployee();
+		return (Employee) i.get();
 	}
 	
-	@SuppressWarnings("unchecked")
-	@PostMapping("/emp/list")
-	public List<Users<?>> list(
-			@PathVariable String user,
-			@RequestBody Employee param) {
-		logger.info("List 진입");
-		IFunction i = (Object o) -> empMap.selectEmployee(param);
-		return (List<Users<?>>)i.apply(param);
-	}
-	
-	@PostMapping("/emp")
+	@PostMapping("/employees")
 	public Map<?,?> join(
 			@PathVariable String userid,
 			@RequestBody Employee param) {
@@ -60,7 +48,7 @@ private static final Logger logger = LoggerFactory.getLogger(EmployeeCtrl.class)
 		return map;
 	}
 
-	@PutMapping("/emp/{userid}")
+	@PutMapping("/employees/{userid}")
 	public Map<?,?> update(
 			@PathVariable String userid,
 			@RequestBody Employee param) {
@@ -73,7 +61,7 @@ private static final Logger logger = LoggerFactory.getLogger(EmployeeCtrl.class)
 		return map;
 	}
 	
-	@DeleteMapping("/emp/{userid}")
+	@DeleteMapping("/employees/{userid}")
 	public Map<?,?> delete(
 			@PathVariable String userid,
 			@RequestBody Employee param) {

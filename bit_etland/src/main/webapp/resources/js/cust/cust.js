@@ -2,13 +2,17 @@ var cust = cust || {}
 cust = (()=>{
 	let _,js,compojs,r_cnt ,l_cnt,prodjs;
 	
-	let init = (d)=>{
+	let path = ()=>{
 		_ = $.ctx();
         js = $.js();
         compojs = js+"/component/compo.js";
         prodjs = js+"/prod/prod.js";
         r_cnt = "#right_content";
         l_cnt = "#left_content";
+	};
+	
+	let init = (d)=>{
+		path();
 		onCreate(d);
 	};
 	let onCreate = (d)=>{
@@ -123,6 +127,16 @@ cust = (()=>{
 			}
 		});
 	};
-	return {init : init,mypage:mypage,cus_nav:cus_nav};
+	let list = ()=>{
+		path();
+		$.getJSON( _+'/customers/page/1',d=>{
+			alert('데이터 받기 성공쓰~~');
+			$.each(d,(i,j)=>{
+				$('<tr> <td>'+i+'</td><td>'+j.customerID+'</td><td> '+j.customerName+'</td><td>'+j.ssn+'</td><td> '+j.phone+'</td><td>'+j.city
+						+'</td><td>'+j.address+'</td><td>'+j.postalCode+'</td>').appendTo('#customers');
+			});
+		});
+	};
+	return {init : init,mypage:mypage,cus_nav:cus_nav,list:list};
 })();
 

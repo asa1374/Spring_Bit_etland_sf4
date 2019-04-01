@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bit_etland.web.emp.EmployeeMapper">
+	<select id="selectEmployee" resultType="com.bit_etland.web.emp.Employee">
+	  SELECT EMPLOYEE_ID employeeID,
+	  	NAME,MANAGER,NOTES,BIRTH_DATE birthDate
+	  FROM EMPLOYEES
+	</select>
+<!-- 	<insert id="registEmployee" parameterType="com.bit_etland.web.emp.Employee"
+		  flushCache="true" statementType="PREPARED" timeout="20">
+	    INSERT INTO CUSTOMERS (CUSTOMER_ID,CUSTOMER_NAME,PASSWORD,CITY,ADDRESS,POSTAL_CODE,SSN,PHONE) 
+	    VALUES (#{customerID},#{customerName},#{password},#{city},#{address},#{postalCode},#{ssn},#{phone})
+	</insert>
+	<update id="modifyEmployee" parameterType="com.bit_etland.web.emp.Employee"
+  			flushCache="true" statementType="PREPARED" timeout="20">
+  			UPDATE CUSTOMERS SET PASSWORD= #{password},PHONE= #{phone},ADDRESS= #{address},CITY= #{city},POSTAL_CODE= #{postalCode} 
+  			WHERE CUSTOMER_ID  LIKE #{customerID}
+	</update>
+	<delete id="removeEmployee" parameterType="com.bit_etland.web.emp.Employee"
+			flushCache="true" statementType="PREPARED" timeout="20">
+	  		DELETE FROM CUSTOMERS WHERE CUSTOMER_ID LIKE #{customerID}
+	</delete> -->
+</mapper>

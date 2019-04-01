@@ -6,6 +6,7 @@ auth = (()=>{
 		_ = $.ctx();
         js = $.js();
         compojs = js+"/component/compo.js";
+        custjs = js+"/cust/cust.js";
         r_cnt = "#right_content";
         l_cnt = "#left_content";
 		onCreate();
@@ -54,11 +55,15 @@ auth = (()=>{
 						break;
 					case 'regist':
 						$(r_cnt).empty();
-						$(compo.cust_login_form()).appendTo(r_cnt);
+						$(compo.emp_register_form()).appendTo(r_cnt);
 						break;
 					case 'access':
 						$(r_cnt).empty();
-						$(compo.cust_login_form()).appendTo(r_cnt);
+						$(compo.emp_access_form()).appendTo(r_cnt);
+						$('#access_btn').click(e=>{
+							e.preventDefault();
+							access();
+						});
 						break;
 					}
 				});
@@ -176,65 +181,28 @@ auth = (()=>{
 			}
 		});
 	};
-	/*let update = ()=>{
-		let data = {
-				customerID:$('form input[name=customerID]').val(),
-				password:$('form input[name=password]').val(),
-				customerName:$('form input[name=customerName]').val(),
-				ssn:$('form input[name=ssn]').val(),
-				phone:$('form input[name=phone]').val(),
-				city:$('form input[name=city]').val(),
-				address:$('form input[name=address]').val(),
-				postalCode:$('form input[name=postalCode]').val()
-		};
-		alert(data.customerID);
-		$.ajax({
-			url:_+'/cust/u',
-			type:'PUT',
-			data:JSON.stringify(data),
-			dataType:'json',
-			contentType:'application/json',
-			success:d=>{
-				if(d.customerID!==''){
-					alert('업데이트 성공');
-					$(r_cnt).html(compo.cust_mypage(d));
-				}else{
-					alert('업데이트 실패하였습니다.');
-				}
-			},
-			error:e=>{
-				alert('실패하였습니다.');
-			}
-		});
-	};*/
 	let access = ()=>{
-		let data = {
-				employeeID:$('form  input[name=uname]').val(),
-				name:$('form  input[name=psw]').val()};
-       $.ajax({
-            url : _+'/users/emp/'+data.employeeID,
-            type : 'POST',
-            data : JSON.stringify(data),
-            dataType : 'json',
-            contentType : 'application/json',
-            success : d=>{
-            	if(d.customerID!==''){
-            		alert('success');
-            		$(r_cnt).html(compo.cust_mypage(d));
-            		$('#update').click(e=>{
-						e.preventDefault();
-						$(r_cnt).html(compo.cust_update_form(d));
-						$('#my_update').click(e=>{
-							e.preventDefault();
-							update();
-						});
-					});
-            	}else{
-            		alert('error');
-            	}
-            },
-            error : e=>{}
-       });
+		let ok = confirm('사원 입니까?');
+		if(ok){
+			let emp_no = prompt('사원번호 입력하세요');
+			$.getJSON(_+'/employees',d=>{
+					if(emp_no === d.employeeID){
+						if($('#name').val() === d.name){
+							alert('사원이 정상적으로 인증 되었습니다.');
+							//고객 명단이 보여야 한다.\
+							$.getScript(custjs,()=>{
+								$(r_cnt).html(compo.cust_list_form());
+								cust.list();
+							});
+						}
+					}else{
+						//사원번호가 일치하지 않다.
+					}
+			});
+		}else{
+			//사원 전용 페이지 입니다.
+			//되돌아 가기 버튼이 보인다.
+		}
 	};
 	return {init : init};
 })();
