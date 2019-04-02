@@ -9,5 +9,5 @@ import lombok.Data;
 public class Customer {
 	private String customerID,
 	customerName,password,ssn,photo,
-	phone,city,address,postalCode,count;
+	phone,city,address,postalCode;
 }

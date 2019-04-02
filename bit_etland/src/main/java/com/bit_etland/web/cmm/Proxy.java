@@ -17,15 +17,16 @@ public class Proxy {
 	public void carryOut(Map<?,?> pramMap) {
 		
 
+		@SuppressWarnings("unchecked")
+		Map<String,String> a = (Map<String, String>) pramMap;
 		
-		pageSize = (pramMap.get("page_size")==null)?5: Integer.parseInt((String) pramMap.get("page_size"));
-		pageNum = (pramMap.get("page_num")==null)?1:Integer.parseInt((String)pramMap.get("page_num"));
-		blockSize = (pramMap.get("block_size")==null)?5:Integer.parseInt((String)pramMap.get("block_size"));
-		blockNum = (pramMap.get("block_num")==null)?0:Integer.parseInt((String)pramMap.get("block_num"));
+		pageNum = (a.get("pageNum")==null)?1: Integer.parseInt(a.get("pageNum"));
+		pageSize = (a.get("pageSize")==null)?5: Integer.parseInt(a.get("pageSize"));
+		blockSize = (a.get("blockSize")==null)?5:Integer.parseInt(a.get("blockSize"));
+		blockNum = (a.get("block_num")==null)?0:Integer.parseInt(a.get("block_num"));
 		
-		totalCount = Integer.parseInt((String)pramMap.get("totalCount"));
-		
-		startRow = pageSize*(pageNum-1)+1;
+		totalCount = (int) pramMap.get("totalCount");
+		startRow = pageSize*(pageNum-1);
 		endRow = pageNum * pageSize;
 		endRow = (totalCount > endRow)?endRow:totalCount;
 		pageCount = totalCount/pageSize;

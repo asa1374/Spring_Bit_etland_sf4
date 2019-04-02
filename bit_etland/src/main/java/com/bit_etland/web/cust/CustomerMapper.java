@@ -10,10 +10,10 @@ import com.bit_etland.web.cmm.Proxy;
 @Repository
 public interface CustomerMapper {
 	public void registCustomer(Customer cus);
-	public List<Customer> bringCustomerList(Proxy pxy);
+	public List<?> bringCustomerList(Proxy pxy);
 	public List<Customer> selectCategoris(Map<?,?> m);
 	public Customer selectCustomer(Customer cus);
-	public int countCustomer(Map<?,?> m);
+	public int countCustomer();
 	public void modifyCustomer(Customer cus);
 	public Map<String, Object> selectProfile(Map<?,?> m);
 	public void removeCustomer(Customer cus);

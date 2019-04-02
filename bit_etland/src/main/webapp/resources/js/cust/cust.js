@@ -6,6 +6,7 @@ cust = (()=>{
 		_ = $.ctx();
         js = $.js();
         compojs = js+"/component/compo.js";
+        empjs = js+"/emp/emp.js";
         prodjs = js+"/prod/prod.js";
         r_cnt = "#right_content";
         l_cnt = "#left_content";
@@ -127,13 +128,43 @@ cust = (()=>{
 			}
 		});
 	};
-	let list = ()=>{
+	let list = (x)=>{
 		path();
-		$.getJSON( _+'/customers/page/1',d=>{
-			alert('데이터 받기 성공쓰~~');
-			$.each(d,(i,j)=>{
-				$('<tr> <td>'+i+'</td><td>'+j.customerID+'</td><td> '+j.customerName+'</td><td>'+j.ssn+'</td><td> '+j.phone+'</td><td>'+j.city
+		$('#customers').empty();
+		$.getScript(empjs,()=>{
+			emp.emp_nav();
+		});
+		$.getJSON( _+'/customers/page/'+x,d=>{
+			alert(x+'번페이지로 간다잉');
+			$('#r_con').text('고객 목록');
+			$.each(d.ls,(i,j)=>{
+				$('<tr> <td>'+j.rownum+'</td><td>'+j.customerID+'</td><td> '+j.customerName+'</td><td>'+j.ssn+'</td><td> '+j.phone+'</td><td>'+j.city
 						+'</td><td>'+j.address+'</td><td>'+j.postalCode+'</td>').appendTo('#customers');
+			});
+			html = '<div class="pagination">';
+			if(d.pxy.existPrev){
+				html += '<a href="${ctx}/customer.do?cmd=cus_list&page=list&page_size=5&page_num=${pagination.prevBlock}" >&laquo;</a>';
+			}
+			for(let i=d.pxy.startPage;i<=d.pxy.endPage;i++){
+				if(d.pxy.pageNum){
+					html += '<a href="#" class="page active">'+i+'</a>';
+				}else{
+					html += '<a href="#" class="page">'+i+'</a>';
+				}
+			}
+			if(d.pxy.existnext){
+				html += '<a href="${ctx}/customer.do?cmd=cus_list&page=list&page_size=5&page_num=${pagination.nextBlock}" class="posblock">&raquo;</a>';
+			}
+			html += '</div>';
+			
+			$('#pagination').empty();
+			$(html).appendTo('#pagination');
+			
+			$('.page').each(function(i){
+				$(this).click(function(){
+					alert(i+1+'번 클릭함');
+					list(i+1);
+				});
 			});
 		});
 	};

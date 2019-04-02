@@ -15,9 +15,13 @@ auth = (()=>{
 		setContentView();
 	};
 	let setContentView = ()=>{
+		auth_nav();
+	};
+	let auth_nav = ()=>{
 		$.getScript(compojs)
 		.done(()=>{
 			$(l_cnt +" > .nav").empty();
+			$('#l_nav_con').text('창준s 프로젝트');
 			$(r_cnt).html(compo.cust_login_form());
 			$('form button[type=submit]').click(e=>{
 				e.preventDefault();
@@ -192,7 +196,7 @@ auth = (()=>{
 							//고객 명단이 보여야 한다.\
 							$.getScript(custjs,()=>{
 								$(r_cnt).html(compo.cust_list_form());
-								cust.list();
+								cust.list(1);
 							});
 						}
 					}else{

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bit_etland.web.cmm.IConsumer;
@@ -46,20 +47,26 @@ public class CustCtrl {
 		return (Customer)i.apply(param);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@GetMapping("/customers/page/{page}")
-	public List<Customer> list(
-			@PathVariable String page) {
+	public Map<?,?> list(
+			@PathVariable("page") String page) {
 		map.clear();
-		map.put("pageNum", "1");
+		System.out.println("넘어온 페이지는"+page);
+		map.put("pageNum", page);
 		map.put("pageSize", "5");
 		map.put("blockSize", "5");
-		map.put("totalCount", "30");
+		
+		ISupplier ic = ()-> custMap.countCustomer();
+		
+		map.put("totalCount", (int) ic.get());
 		pxy.carryOut(map);
 		
 		IFunction i = (Object o) -> custMap.bringCustomerList(pxy);
-		List<Customer> ls = (List<Customer>) i.apply(pxy);
-		return ls;
+		List<?> ls = (List<?>) i.apply(pxy);
+		map.clear();
+		map.put("ls", ls);
+		map.put("pxy", pxy);
+		return map;
 	}
 
 	@PutMapping("/customers/{userid}")
