@@ -6,7 +6,6 @@ emp = (()=>{
 		_ = $.ctx();
         js = $.js();
         compojs = js+"/component/compo.js";
-        empjs = js+"/emp/emp.js";
         prodjs = js+"/prod/prod.js";
         r_cnt = "#right_content";
         l_cnt = "#left_content";
@@ -19,21 +18,11 @@ emp = (()=>{
 		setContentView();
 	};
 	let setContentView = ()=>{
-		emp_nav();
-	};
-	let emp_nav = () =>{
-		path();
 		$.getScript(compojs,()=>{
 			$(l_cnt +" > .nav").empty();
 			$('#l_nav_con').text('창준s 프로젝트');
-			let arr = [
-				{name :"cus_list",text :"고객 목록"},
-				{name :"pro_regi",text :"상품 등록"},
-				{name :"pro_list",text :"상품 목록"},
-				{name :"pro_update",text :"상품 수정"},
-				{name :"pro_delete",text :"상품 삭제"},
-				{name :"pro_stati",text :"상품 통계"}];
-			$.each(arr,(i,j)=>{
+			
+			$.each(emp_nav(),(i,j)=>{
 				$('<li><a>'+j.text+'</a></li>')
 				.appendTo(l_cnt+' .nav')
 				.attr('name',j.name)
@@ -46,10 +35,12 @@ emp = (()=>{
 						
 						break;
 					case 'pro_regi':
-						
+						pro_regi();
 						break;
 					case 'pro_list':
-						
+						$.getScript(prodjs,()=>{
+							prod.get();
+						});
 						break;
 					case 'pro_update':
 						
@@ -69,6 +60,17 @@ emp = (()=>{
 			alert('component/compo.js 를 찾지 못했다.');
 		});
 	};
-	return {init:init,
-		emp_nav:emp_nav};
+	let emp_nav = () => { 
+			return [{name :"cus_list",text :"고객 목록"},
+			{name :"pro_regi",text :"상품 등록"},
+			{name :"pro_list",text :"상품 목록"},
+			{name :"pro_update",text :"상품 수정"},
+			{name :"pro_delete",text :"상품 삭제"},
+			{name :"pro_stati",text :"상품 통계"}];
+	};
+	let pro_regi = ()=>{
+		$(r_cnt).html(compo.product_post());
+		
+	};
+	return {init:init};
 })();

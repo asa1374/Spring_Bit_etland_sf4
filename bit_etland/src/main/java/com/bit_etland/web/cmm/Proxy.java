@@ -9,23 +9,18 @@ import lombok.Data;
 
 @Component @Data @Lazy
 public class Proxy {
-	
 	private int pageNum, pageSize, blockSize,totalCount,blockNum,
 	startRow,endRow,startPage,endPage,prevBlock,nextBlock,pageCount;
 	private boolean existPrev, existnext;
 	
-	public void carryOut(Map<?,?> pramMap) {
+	public void carryOut(Map<?,?> paramMap) {
 		
-
-		@SuppressWarnings("unchecked")
-		Map<String,String> a = (Map<String, String>) pramMap;
+		pageNum = (paramMap.get("pageNum")==null)?1: Integer.parseInt((String) paramMap.get("pageNum"));
+		pageSize = (paramMap.get("pageSize")==null)?5: Integer.parseInt((String) paramMap.get("pageSize"));
+		blockSize = (paramMap.get("blockSize")==null)?5:Integer.parseInt((String) paramMap.get("blockSize"));
 		
-		pageNum = (a.get("pageNum")==null)?1: Integer.parseInt(a.get("pageNum"));
-		pageSize = (a.get("pageSize")==null)?5: Integer.parseInt(a.get("pageSize"));
-		blockSize = (a.get("blockSize")==null)?5:Integer.parseInt(a.get("blockSize"));
-		blockNum = (a.get("block_num")==null)?0:Integer.parseInt(a.get("block_num"));
+		totalCount = (int) paramMap.get("totalCount");
 		
-		totalCount = (int) pramMap.get("totalCount");
 		startRow = pageSize*(pageNum-1);
 		endRow = pageNum * pageSize;
 		endRow = (totalCount > endRow)?endRow:totalCount;
@@ -40,13 +35,15 @@ public class Proxy {
 			endPage=pageCount;
 		}
 		existPrev = (blockSize>=pageNum)?false:true;
-		existnext = (pageCount<=(startPage + pageSize))?false:true;
+		existnext = (pageCount<(startPage + pageSize))?false:true;
 		prevBlock = startPage - pageSize;
 		nextBlock = startPage + pageSize;
-		System.out.println(totalCount);
-		System.out.println("pageCountpageCount       "+pageCount);
-		System.out.println("startPage + pageSize       "+startPage + pageSize);
-		System.out.println("프리"+existPrev);
-		System.out.println(existnext);
-}
+		System.out.println("existPrevexistPrevexistPrevexistPrev" +existPrev);
+		System.out.println("existnextexistnextexistnextexistnext" +existnext);
+		System.out.println("startPage          " +startPage);
+		System.out.println("endPage            " +endPage);
+		System.out.println("blockNum           " +blockNum);
+		System.out.println("prevBlock          " +prevBlock);
+		System.out.println("nextBlock          " +nextBlock);
+	}
 }

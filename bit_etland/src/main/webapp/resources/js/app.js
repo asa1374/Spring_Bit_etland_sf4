@@ -11,7 +11,8 @@ app = (()=>{
 				$.getScript($.js()+'/component/compo.js'),
 				$.getScript($.js()+'/cust/cust.js'),
 				$.getScript($.js()+'/comm/auth.js'),
-				$.getScript($.js()+'/emp/emp.js')
+				$.getScript($.js()+'/emp/emp.js'),
+				$.getScript($.js()+'/prod/prod.js')
 		).done(()=>{
 			auth.init();
 		});

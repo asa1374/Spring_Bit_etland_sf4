@@ -15,9 +15,6 @@ auth = (()=>{
 		setContentView();
 	};
 	let setContentView = ()=>{
-		auth_nav();
-	};
-	let auth_nav = ()=>{
 		$.getScript(compojs)
 		.done(()=>{
 			$(l_cnt +" > .nav").empty();
@@ -27,12 +24,7 @@ auth = (()=>{
 				e.preventDefault();
 				login();
 			});
-			let arr = [
-				{name :"login",text :"로그인"},
-				{name :"join",text :"회원가입"},
-				{name :"regist",text :"사원등록"},
-				{name :"access",text :"사원로그인"}];
-			$.each(arr,(i,j)=>{
+			$.each(auth_nav(),(i,j)=>{
 				$('<li><a>'+j.text+'</a></li>')
 				.appendTo(l_cnt +' > .nav')
 				.attr('name',j.name)
@@ -77,6 +69,13 @@ auth = (()=>{
 		.fail(()=>{
 			alert('component/compo.js 를 찾지 못했다.');
 		});
+	};
+	let auth_nav = ()=>{
+		return [
+			{name :"login",text :"로그인"},
+			{name :"join",text :"회원가입"},
+			{name :"regist",text :"사원등록"},
+			{name :"access",text :"사원로그인"}];
 	};
 	let login = ()=>{
           let data = {
@@ -192,8 +191,6 @@ auth = (()=>{
 			$.getJSON(_+'/employees',d=>{
 					if(emp_no === d.employeeID){
 						if($('#name').val() === d.name){
-							alert('사원이 정상적으로 인증 되었습니다.');
-							//고객 명단이 보여야 한다.\
 							$.getScript(custjs,()=>{
 								$(r_cnt).html(compo.cust_list_form());
 								cust.list(1);

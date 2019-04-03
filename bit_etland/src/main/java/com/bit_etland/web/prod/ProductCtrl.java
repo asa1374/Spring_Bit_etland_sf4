@@ -1,5 +1,6 @@
 package com.bit_etland.web.prod;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bit_etland.web.cmm.IConsumer;
 import com.bit_etland.web.cmm.IFunction;
+import com.bit_etland.web.cmm.ISupplier;
 import com.bit_etland.web.cmm.PrintService;
+import com.bit_etland.web.cmm.Proxy;
 import com.bit_etland.web.cmm.Users;
 
 @RestController
@@ -27,8 +30,9 @@ private static final Logger logger = LoggerFactory.getLogger(ProductCtrl.class);
 	@Autowired ProductMapper prodMap;
 	@Autowired Map<String, Object> map;
 	@Autowired Users<?> users;
+	@Autowired Proxy pxy;
 	
-	@PostMapping("/phones/")
+	@PostMapping("/phones")
 	public Map<?,?> regist(
 			@RequestBody Product param) {
 		logger.info("등록 진입");
@@ -39,13 +43,24 @@ private static final Logger logger = LoggerFactory.getLogger(ProductCtrl.class);
 		return map;
 	}
 
-	@GetMapping("/phones/{userid}")
-	public Product list(
-			@PathVariable String userid,
-			@RequestBody Product param) {
-		logger.info("List 진입");
-		IFunction i = (Object o) -> prodMap.retrieveProduct(param);
-		return (Product)i.apply(param);
+	@GetMapping("/phones/page/{page}")
+	public Map<?,?> list(
+			@PathVariable String page) {
+		map.clear();
+		System.out.println("넘어온 페이지는"+page);
+		map.put("pageNum", page);
+		map.put("pageSize", "5");
+		map.put("blockSize", "5");
+		ISupplier is = () -> prodMap.countProduct();
+		map.put("totalCount", is.get());
+		pxy.carryOut(map);
+		
+		IFunction i = (Object o) -> prodMap.bringProductList(pxy);
+		List<?> ls = (List<?>) i.apply(pxy);
+		map.clear();
+		map.put("ls", ls);
+		map.put("pxy", pxy);
+		return map;
 	}
 	
 	@PutMapping("/phones/{userid}")

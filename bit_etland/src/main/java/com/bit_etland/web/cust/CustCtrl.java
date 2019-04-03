@@ -56,9 +56,11 @@ public class CustCtrl {
 		map.put("pageSize", "5");
 		map.put("blockSize", "5");
 		
+		
 		ISupplier ic = ()-> custMap.countCustomer();
 		
-		map.put("totalCount", (int) ic.get());
+		map.put("totalCount", ic.get());
+		
 		pxy.carryOut(map);
 		
 		IFunction i = (Object o) -> custMap.bringCustomerList(pxy);
