@@ -1,6 +1,7 @@
+"use strict";
 var auth = auth || {};
 auth = (()=>{
-	let _,js,compojs,r_cnt ,l_cnt;
+	let _,js,compojs,r_cnt ,l_cnt,custjs;
 	
 	let init = ()=>{
 		_ = $.ctx();

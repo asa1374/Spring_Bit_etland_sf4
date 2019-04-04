@@ -3,9 +3,6 @@
 	"-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit_etland.web.prod.ProductMapper">
-<!-- customerID,
-	customerName,password,ssn,photo,
-	phone,city,address,postalCode -->
 <resultMap id="result" type="hashmap">
   <id property="productID" column="PRODUCT_ID" />
   <result property="productName" column="PRODUCT_NAME"/>
@@ -14,6 +11,11 @@
   <result property="price" column="PRICE"/>
   <result property="rownum" column="ROWNUM"/>
 </resultMap>
+	<insert id="registProduct" parameterType="com.bit_etland.web.prod.Product"
+		  flushCache="true" statementType="PREPARED" timeout="20">
+	    INSERT INTO PRODUCTS (PRODUCT_NAME,SUPPLIER_ID,CATEGORY_ID,UNIT,PRICE) 
+	    VALUES (#{productName},#{supplierID},#{categoryID},#{unit},#{price})
+	</insert>
 	<select id="bringProductList" resultMap="result"
 	parameterType="com.bit_etland.web.cmm.Proxy">
 	SELECT @ROWNUM:=@ROWNUM+1 ROWNUM, P.*

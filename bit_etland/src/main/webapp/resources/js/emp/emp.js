@@ -1,3 +1,4 @@
+"use strict";
 var emp = emp || {};
 emp = (()=>{
 	let _,js,compojs,r_cnt ,l_cnt,prodjs;
@@ -35,7 +36,9 @@ emp = (()=>{
 						
 						break;
 					case 'pro_regi':
-						pro_regi();
+						$.getScript(prodjs,()=>{
+							prod.post();
+						});
 						break;
 					case 'pro_list':
 						$.getScript(prodjs,()=>{

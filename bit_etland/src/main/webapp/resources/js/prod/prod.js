@@ -1,3 +1,4 @@
+"use strict";
 var prod = prod || {};
 prod = (()=>{
 	let _,js,compojs,r_cnt ,l_cnt;
@@ -22,7 +23,47 @@ prod = (()=>{
 		});
 	};
 	let post = ()=>{
-		$(r_cnt).html(compo.prod_post());
+		path();
+		$(r_cnt).html(compo.product_post());
+		$('#prd_post_btn').click(e=>{
+			e.preventDefault();
+			 let checkboxValues = [];
+			 $(".checks:checked").each(function(i) {
+			    checkboxValues.push($(this).val());
+			});
+			let pname =  $('#product_name').val();
+			let price =  $('#price').val();
+			let unit =  $('#unit').val();
+			let comment =  $('#comment').val();
+			if($.fn.nullChecker([pname,price,unit])){
+				alert('입력란을 확인 해주세요');
+			}else{
+				alert('잘입력했습니다.');
+			}
+				
+			let data = {categoryID:$('#category_name').val(),
+						productName:pname,
+						price:price,
+						unit:unit,
+						supplierID:$('#supplier_name').val(),
+						color:$('.radi:checked').val(),
+						freesbies:checkboxValues,
+						comment:comment};//라디오에 클래스부여함 
+			$.ajax({
+				url:_+'/phones',
+				type:'post',
+				data:JSON.stringify(data),
+				dataType:'json',
+				contentType:'application/json',
+				success:d=>{
+					alert('성공');
+					lst(1);
+				},
+				error:e=>{
+					alert('에러');
+				}
+			});//ajax끝
+		});
 	};
 	let get = ()=>{
 		pro_list(1);
@@ -55,7 +96,6 @@ prod = (()=>{
 			$.each(d.ls,(i,j)=>{
 				table += '<tr> <td>'+i+1+'</td><td>'+j.productName+'</td><td> '+j.unit+'</td><td>'+j.price+'</td>';
 			});
-			
 			table +='</table>';
 			$(table)
 			.addClass('w3-table-all')
@@ -103,5 +143,5 @@ prod = (()=>{
 		$('#prod2').attr('src',$.img()+"/한효주.jpeg").css('width','600px');
 		$('#prod3').attr('src',$.img()+"/해서웨이.jpg").css('width','600px');
 	};
-	return {init:init,get:get};
+	return {init:init,get:get,post:post};
 })();

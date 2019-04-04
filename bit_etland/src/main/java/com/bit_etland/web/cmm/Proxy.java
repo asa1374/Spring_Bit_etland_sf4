@@ -38,12 +38,5 @@ public class Proxy {
 		existnext = (pageCount<(startPage + pageSize))?false:true;
 		prevBlock = startPage - pageSize;
 		nextBlock = startPage + pageSize;
-		System.out.println("existPrevexistPrevexistPrevexistPrev" +existPrev);
-		System.out.println("existnextexistnextexistnextexistnext" +existnext);
-		System.out.println("startPage          " +startPage);
-		System.out.println("endPage            " +endPage);
-		System.out.println("blockNum           " +blockNum);
-		System.out.println("prevBlock          " +prevBlock);
-		System.out.println("nextBlock          " +nextBlock);
 	}
 }

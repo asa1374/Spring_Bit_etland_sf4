@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,30 +15,50 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bit_etland.web.cate.Category;
+import com.bit_etland.web.cate.CategoryMapper;
 import com.bit_etland.web.cmm.IConsumer;
 import com.bit_etland.web.cmm.IFunction;
 import com.bit_etland.web.cmm.ISupplier;
 import com.bit_etland.web.cmm.PrintService;
 import com.bit_etland.web.cmm.Proxy;
 import com.bit_etland.web.cmm.Users;
+import com.bit_etland.web.supp.Supplier;
+import com.bit_etland.web.supp.SupplierMapper;
 
 @RestController
 public class ProductCtrl {
 private static final Logger logger = LoggerFactory.getLogger(ProductCtrl.class);
 	
 	@Autowired Product prod;
+	@Autowired Category cate;
+	@Autowired Supplier supp;
 	@Autowired PrintService ps;
 	@Autowired ProductMapper prodMap;
+	@Autowired CategoryMapper cateMap;
+	@Autowired SupplierMapper suppMap;
 	@Autowired Map<String, Object> map;
 	@Autowired Users<?> users;
 	@Autowired Proxy pxy;
 	
+	@Transactional
 	@PostMapping("/phones")
 	public Map<?,?> regist(
 			@RequestBody Product param) {
-		logger.info("등록 진입");
-		IConsumer i = (Object o) -> prodMap.registProduct(param);
+		System.out.println("프로덕트 레지스트 진입");
+		
+		IFunction f = s -> cateMap.txCategory((String) s);
+		String c = (String) f.apply(param.getCategoryID());
+		
+		IFunction ff = s -> suppMap.txSupplier((String) s);
+		String s = (String) ff.apply(param.getSupplierID());
+		
+		param.setCategoryID(c);
+		param.setSupplierID(s);
+
+		IConsumer i = o -> prodMap.registProduct((Product) o);
 		i.accept(param);
+		
 		map.clear();
 		map.put("s", "s");
 		return map;

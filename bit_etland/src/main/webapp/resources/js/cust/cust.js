@@ -1,6 +1,7 @@
+"use strict";
 var cust = cust || {}
 cust = (()=>{
-	let _,js,compojs,r_cnt ,l_cnt,prodjs;
+	let _,js,compojs,r_cnt ,l_cnt,prodjs,empjs;
 	
 	let path = ()=>{
 		_ = $.ctx();

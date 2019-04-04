@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bit_etland.web.cate.CategoryMapper">
+<resultMap id="result" type="hashmap">
+  <id property="categoryID" column="CATEGORY_ID" />
+  <result property="productName" column="CATEGORY_NAME"/>
+  <result property="description" column="DESCRIPTION"/>
+  <result property="rownum" column="ROWNUM"/>
+</resultMap>
+	<select id="txCategory" resultType="string" parameterType="string">
+	  SELECT CATEGORY_ID categoryID
+	  FROM CATEGORIES
+	  WHERE CATEGORY_NAME LIKE #{categoryName}
+	</select>
+	<select id="bringCategoryList" resultMap="result"
+	parameterType="com.bit_etland.web.cmm.Proxy">
+	SELECT @ROWNUM:=@ROWNUM+1 ROWNUM, C.*
+   	FROM CATEGORIES C, (SELECT @ROWNUM:=0)TMP
+    ORDER BY ROWNUM DESC
+    limit #{startRow}, #{pageSize};
+	</select>
+	<select id="countCategory" resultType="Integer">
+	SELECT COUNT(*)
+	FROM CATEGORIES
+	</select>
+</mapper>
