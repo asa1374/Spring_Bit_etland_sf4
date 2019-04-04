@@ -20,6 +20,7 @@ auth = (()=>{
 		.done(()=>{
 			$(l_cnt +" > .nav").empty();
 			$('#l_nav_con').text('창준s 프로젝트');
+			$('.input-group').html('');
 			$(r_cnt).html(compo.cust_login_form());
 			$('form button[type=submit]').click(e=>{
 				e.preventDefault();

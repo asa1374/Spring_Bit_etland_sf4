@@ -11,9 +11,10 @@ import com.bit_etland.web.cmm.Proxy;
 public interface ProductMapper {
 	public void registProduct(Product pro);
 	public List<?> bringProductList(Proxy pxy);
-	public List<Product> retrieveProducts(Map<?,?> m);
+	public List<?> retrieveProducts(Proxy pxy);
 	public Product retrieveProduct(Product pro);
 	public int countProduct();
+	public int searchcountProducts(String search);
 	public void modifyProduct(Product pro);
 	public void removeProduct(Product pro);
 }

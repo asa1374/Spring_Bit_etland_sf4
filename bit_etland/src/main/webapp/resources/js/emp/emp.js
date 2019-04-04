@@ -22,7 +22,10 @@ emp = (()=>{
 		$.getScript(compojs,()=>{
 			$(l_cnt +" > .nav").empty();
 			$('#l_nav_con').text('창준s 프로젝트');
-			
+			$('#search_btn').click(()=>{
+				alert('검색 버튼을 눌러버렸따잉  검색어는 : ' +$('#search_word').val());
+				search($('#search_word').val());
+			});
 			$.each(emp_nav(),(i,j)=>{
 				$('<li><a>'+j.text+'</a></li>')
 				.appendTo(l_cnt+' .nav')
@@ -61,6 +64,13 @@ emp = (()=>{
 		})
 		.fail(()=>{
 			alert('component/compo.js 를 찾지 못했다.');
+		});
+	};
+	let search = x=>{
+		$.getJSON(_+'/transaction/'+x,d=>{
+			if(d.s==='s'){
+				alert('보내기 성공');
+			}
 		});
 	};
 	let emp_nav = () => { 

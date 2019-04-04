@@ -21,7 +21,26 @@
 	SELECT @ROWNUM:=@ROWNUM+1 ROWNUM, P.*
    	FROM PRODUCTS P, (SELECT @ROWNUM:=0)TMP
     ORDER BY ROWNUM DESC
-    limit #{startRow}, #{pageSize};
+    limit #{startRow}, #{pageSize}
+	</select>
+	<select id="retrieveProducts" resultType="com.bit_etland.web.prod.Product" 
+	parameterType="com.bit_etland.web.cmm.Proxy">
+	SELECT @ROWNUM:=@ROWNUM+1 COLOR,P.PRODUCT_NAME productName
+			,S.SUPPLIER_NAME supplierID,P.UNIT,P.PRICE
+	FROM PRODUCTS P JOIN SUPPLIERS S ON P.SUPPLIER_ID LIKE S.SUPPLIER_ID ,(SELECT @ROWNUM:=0)TMP
+	WHERE P.PRODUCT_NAME LIKE #{search} 
+		OR S.SUPPLIER_NAME LIKE #{search} 
+		OR S.ADDRESS LIKE #{search}
+		OR S.CITY LIKE #{search}
+	limit #{startRow}, #{pageSize}
+	</select>
+	<select id="searchcountProducts" resultType="int" parameterType="string">
+	SELECT COUNT(*)
+	FROM PRODUCTS P JOIN SUPPLIERS S ON P.SUPPLIER_ID LIKE S.SUPPLIER_ID
+	WHERE P.PRODUCT_NAME LIKE #{SEARCH} 
+		OR S.SUPPLIER_NAME LIKE #{SEARCH} 
+		OR S.ADDRESS LIKE #{SEARCH}
+		OR S.CITY LIKE #{SEARCH}
 	</select>
 	<select id="countProduct" resultType="Integer">
 	SELECT COUNT(*)

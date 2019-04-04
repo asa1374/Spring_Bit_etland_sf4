@@ -25,6 +25,11 @@ cust = (()=>{
 		.done(()=>{
 			$(l_cnt +" > .nav").empty();
 			mypage(d);
+			$('#search_btn').click(()=>{
+				alert('검색 버튼을 눌러버렸따잉  검색어는 : ' +$('#search_word').val());
+				let arr = {y : '1',x:$('#search_word').val()}
+				search(arr);
+			});
 			$.each(cus_nav(),(i,j)=>{
 				$('<li><a>'+j.text+'</a></li>')
 				.appendTo(l_cnt+' .nav')
@@ -68,6 +73,79 @@ cust = (()=>{
 		})
 		.fail(()=>{
 			alert('component/compo.js 를 찾지 못했다.');
+		});
+	};
+	let search = (arr) =>{
+		$.getJSON(_+'/transaction/'+arr.y+'/'+arr.x,d=>{
+			if(d.s==='s'){
+				alert('보내기 성공');
+				$('#right_content').empty();
+				$('<div id="prod_serch_list">'
+				+'<h2>검색된 상품 목록</h2>'
+				+'</div>'
+				+'<div class="center"><div id="pagination" class="pagination"></div></div>'
+				).appendTo('#right_content');
+				
+				let table = '<table id="search_prod">'
+					+'  <tr>'
+					+'    <th>No.</th>'
+					+'    <th>상품이름</th>'
+					+'    <th>제조사이름</th>'
+					+'    <th>상품가격</th>'
+					+'    <th>상품수량</th>'
+					+'  </tr>';
+				$.each(d.ls,(i,j)=>{
+					table += '<tr> <td>'+j.color+'</td><td>'+j.productName+'</td><td>'
+					+j.supplierID+'</td><td>'+j.unit+'</td><td> '+j.price+'</td>';
+				});
+				
+				table +='</table>';
+				$(table)
+				.addClass('w3-table-all')
+				.appendTo('#prod_serch_list');
+				
+				alert(arr.x);
+				
+				
+				if(d.pxy.existPrev){
+					$('<a class="preblock">&laquo;</a>')
+					.addClass('cursor')
+					.appendTo('#pagination')
+					.click(()=>{
+						let a={y:d.pxy.prevBlock,x:arr.x};
+						search(a);
+					});
+				}
+				let i=0;
+				for(i=d.pxy.startPage;i<=d.pxy.endPage;i++){
+					if(d.pxy.pageNum){
+						$('<a class="page active">'+i+'</a>')
+						.addClass('cursor')
+						.appendTo('#pagination')
+						.click(function(){
+							let a={y:$(this).text(),x:arr.x};
+							search(a);
+						});
+					}else{
+						$('<a class="page">'+i+'</a>')
+						.addClass('cursor')
+						.appendTo('#pagination')
+						.click(function(){
+							let a={y:$(this).text(),x:arr.x};
+							search(a);
+						});
+					}
+				}
+				if(d.pxy.existnext){
+					$('<a class="posblock">&raquo;</a>')
+					.addClass('cursor')
+					.appendTo('#pagination')
+					.click(function(){
+						let a={y:d.pxy.nextBlock,x:arr.x};
+						search(a);
+					});
+				}
+			}
 		});
 	};
 	let cus_nav = () =>{
