@@ -52,7 +52,7 @@
 	        <li><a href="#section3">Family</a></li>
 	        <li><a href="#section3">Photos</a></li>
 	      </ul><br>
-	      <div class="input-group">
+	      <div id="search_group" class="input-group">
 	        <input type="text" class="form-control" id="search_word" placeholder="상품 검색">
 	        <span class="input-group-btn">
 	          <button id="search_btn" class="btn btn-default" type="button">

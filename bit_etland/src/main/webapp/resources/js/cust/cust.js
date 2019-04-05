@@ -82,6 +82,7 @@ cust = (()=>{
 				$('#right_content').empty();
 				$('<div id="prod_serch_list">'
 				+'<h2>검색된 상품 목록</h2>'
+				+'<button id="grid_btn">그리드로 보기</button>'
 				+'</div>'
 				+'<div class="center"><div id="pagination" class="pagination"></div></div>'
 				).appendTo('#right_content');
@@ -91,8 +92,8 @@ cust = (()=>{
 					+'    <th>No.</th>'
 					+'    <th>상품이름</th>'
 					+'    <th>제조사이름</th>'
-					+'    <th>상품가격</th>'
 					+'    <th>상품수량</th>'
+					+'    <th>상품가격</th>'
 					+'  </tr>';
 				$.each(d.ls,(i,j)=>{
 					table += '<tr> <td>'+j.color+'</td><td>'+j.productName+'</td><td>'
@@ -103,9 +104,6 @@ cust = (()=>{
 				$(table)
 				.addClass('w3-table-all')
 				.appendTo('#prod_serch_list');
-				
-				alert(arr.x);
-				
 				
 				if(d.pxy.existPrev){
 					$('<a class="preblock">&laquo;</a>')
@@ -145,7 +143,84 @@ cust = (()=>{
 						search(a);
 					});
 				}
+				
+				$('#grid_btn').click(e=>{
+					e.preventDefault();
+					alert('그리드버튼 클릭');
+					let a = {y:1,x:arr.x}
+					grid_list(a);
+				});
 			}
+		});
+	};
+	let grid_list = arr =>{
+		$.getJSON(_+'/phones/'+arr.y+'/'+arr.x,d=>{
+			$('#right_content').empty();
+			$('<button id="list_btn">리스트로 보기</button>'
+				+'<div class="grid"></div>'
+				+'<div class="center"><div id="pagination" class="pagination"></div></div>'
+			).appendTo('#right_content');
+				let grid = '<div id="grid_images" class="row">';
+				$.each(d.ls,(i,j)=>{
+					grid +='<div class="col-md-4">' 
+						+'<div class="thumbnail">'
+					      	+'<a href="#" target="_blank">'
+					      		+'<img src="https://img.insight.co.kr/static/2018/07/21/700/cdt6jm54pmm377qokn80.jpg" alt="Lights" style="width:100%">'
+					      		+'<div class="caption">'
+					      			+'<p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>'
+					      		+'</div>'
+					      	+'</a>'
+					      +'</div>'
+					+'</div>';
+				});
+				grid +='</div>';
+				$(grid)
+				.appendTo('.grid');
+				
+				if(d.pxy.existPrev){
+					$('<a class="preblock">&laquo;</a>')
+					.addClass('cursor')
+					.appendTo('#pagination')
+					.click(()=>{
+						let a={y:d.pxy.prevBlock,x:arr.x};
+						grid_list(a);
+					});
+				}
+				let i=0;
+				for(i=d.pxy.startPage;i<=d.pxy.endPage;i++){
+					if(d.pxy.pageNum){
+						$('<a class="page active">'+i+'</a>')
+						.addClass('cursor')
+						.appendTo('#pagination')
+						.click(function(){
+							let a={y:$(this).text(),x:arr.x};
+							grid_list(a);
+						});
+					}else{
+						$('<a class="page">'+i+'</a>')
+						.addClass('cursor')
+						.appendTo('#pagination')
+						.click(function(){
+							let a={y:$(this).text(),x:arr.x};
+							grid_list(a);
+						});
+					}
+				}
+				if(d.pxy.existnext){
+					$('<a class="posblock">&raquo;</a>')
+					.addClass('cursor')
+					.appendTo('#pagination')
+					.click(function(){
+						let a={y:d.pxy.nextBlock,x:arr.x};
+						grid_list(a);
+					});
+				}
+				$('#list_btn').click(e=>{
+					e.preventDefault();
+					alert('리스트버튼 클릭');
+					let a = {y:1,x:arr.x}
+					search(a);
+				});
 		});
 	};
 	let cus_nav = () =>{

@@ -47,4 +47,30 @@ public class TxCtrl {
 		
 		return map;
 	}
+	@GetMapping("/phones/{page}/{search}")
+	public Map<?,?> grid(
+			@PathVariable("page") String page,
+			@PathVariable String search) {
+		
+		System.out.println("TX 진입");
+		String sa = "%"+search+"%";
+		map.clear();
+		map.put("pageNum", page);
+		map.put("pageSize", "9");
+		map.put("blockSize", "5");
+		ISupplier ic = ()-> prodMap.searchcountProducts(sa);
+		map.put("totalCount", ic.get());
+		
+		map.put("search", search);
+		pxy.carryOut(map);
+		IFunction f = (Object o) -> prodMap.retrieveProducts(pxy);
+		List<?> ls = (List<?>) f.apply(pxy);
+		
+		map.clear();
+		map.put("s", "s");
+		map.put("ls", ls);
+		map.put("pxy", pxy);
+		
+		return map;
+	}
 }

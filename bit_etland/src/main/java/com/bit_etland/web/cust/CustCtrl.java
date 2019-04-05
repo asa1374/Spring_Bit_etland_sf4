@@ -56,7 +56,6 @@ public class CustCtrl {
 		map.put("pageSize", "5");
 		map.put("blockSize", "5");
 		
-		
 		ISupplier ic = ()-> custMap.countCustomer();
 		
 		map.put("totalCount", ic.get());
