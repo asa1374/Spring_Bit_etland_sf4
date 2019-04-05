@@ -48,7 +48,7 @@ prod = (()=>{
 						supplierID:$('#supplier_name').val(),
 						color:$('.radi:checked').val(),
 						freesbies:checkboxValues,
-						comment:comment};//라디오에 클래스부여함 
+						comment:comment};
 			$.ajax({
 				url:_+'/phones',
 				type:'post',
@@ -63,6 +63,32 @@ prod = (()=>{
 					alert('에러');
 				}
 			});//ajax끝
+		});
+		$('#img_upload_btn').click(function(e){
+			e.preventDefault();
+			let ok = ($(this).files[0].name.match(/jpg|gif|png|jpeg/i))?true:false;
+
+			if(ok){
+				let fd = new FormData();
+				fd.append('file',$(this).files[0]);
+				$.ajax({
+					url :_+'/phones/files',
+					type :'post',
+					data : fd,
+					async : false,
+					cache : false,
+					contentType : false,
+					processData : false,
+					success : d=>{
+						alert('파일업로드 성공');
+					},
+					error : e=>{
+						alert('파일업로드 실패');
+					}
+				});
+			}else{
+				alert('gif,png,jpg,jpeg 파일만 업로드 가능');
+			}
 		});
 	};
 	let get = ()=>{

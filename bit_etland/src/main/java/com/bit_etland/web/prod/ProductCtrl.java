@@ -3,6 +3,8 @@ package com.bit_etland.web.prod;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bit_etland.web.cate.Category;
 import com.bit_etland.web.cate.CategoryMapper;
@@ -40,6 +43,7 @@ private static final Logger logger = LoggerFactory.getLogger(ProductCtrl.class);
 	@Autowired Map<String, Object> map;
 	@Autowired Users<?> users;
 	@Autowired Proxy pxy;
+	@Resource(name = "uploadPath") private String uploadPath;
 	
 	@Transactional
 	@PostMapping("/phones")
@@ -62,6 +66,12 @@ private static final Logger logger = LoggerFactory.getLogger(ProductCtrl.class);
 		map.clear();
 		map.put("s", "s");
 		return map;
+	}
+	@PostMapping("/phones/files")
+	public Map<?,?> fileupload(
+			@RequestBody MultipartFile file)throws Exception{
+		ps.accept("넘어온 파일명"+file.getName());
+		return null;
 	}
 
 	@GetMapping("/phones/page/{page}")
