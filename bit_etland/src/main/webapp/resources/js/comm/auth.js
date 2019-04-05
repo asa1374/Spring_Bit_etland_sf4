@@ -20,10 +20,16 @@ auth = (()=>{
 		.done(()=>{
 			$(l_cnt +" > .nav").empty();
 			$('#l_nav_con').text('창준s 프로젝트');
-			$('.input-group').html('');
+			$('.input-group').empty();
 			$(r_cnt).html(compo.cust_login_form());
 			$('form button[type=submit]').click(e=>{
 				e.preventDefault();
+				$('<input type="text" class="form-control" id="search_word" placeholder="상품 검색">'
+						+'<span class="input-group-btn">'
+						+'  <button id="search_btn" class="btn btn-default" type="button">'
+						+'    <span class="glyphicon glyphicon-search"></span>'
+						+'  </button>'
+						+'</span>').appendTo('.input-group');
 				login();
 			});
 			$.each(auth_nav(),(i,j)=>{

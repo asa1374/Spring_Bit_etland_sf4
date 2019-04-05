@@ -17,7 +17,6 @@ public class Proxy {
 	public void carryOut(Map<?,?> paramMap) {
 		String sa = (String) paramMap.get("search");
 		search = "%"+sa+"%";
-		System.out.println("프록시에 넘어온  검색어"+ search);
 		pageNum = (paramMap.get("pageNum")==null)?1: Integer.parseInt((String) paramMap.get("pageNum"));
 		pageSize = (paramMap.get("pageSize")==null)?5: Integer.parseInt((String) paramMap.get("pageSize"));
 		blockSize = (paramMap.get("blockSize")==null)?5:Integer.parseInt((String) paramMap.get("blockSize"));

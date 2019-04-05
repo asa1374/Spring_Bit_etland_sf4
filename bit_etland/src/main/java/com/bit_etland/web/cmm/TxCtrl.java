@@ -27,8 +27,6 @@ public class TxCtrl {
 			@PathVariable String search) {
 		
 		System.out.println("TX 진입");
-		
-		System.out.println("넘어온 페이지는"+page);
 		String sa = "%"+search+"%";
 		map.clear();
 		map.put("pageNum", page);
@@ -38,9 +36,7 @@ public class TxCtrl {
 		map.put("totalCount", ic.get());
 		
 		map.put("search", search);
-		System.out.println("카운트으으으으으으"+ic.get());
 		pxy.carryOut(map);
-		
 		IFunction f = (Object o) -> prodMap.retrieveProducts(pxy);
 		List<?> ls = (List<?>) f.apply(pxy);
 		
